@@ -76,7 +76,6 @@ form select {
 	box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.3), 0 7px 21px 0 rgba(0, 0, 0, 0.20); 
 }
 
-
 		#gender {
 			width: 15px;
 		}
@@ -129,9 +128,10 @@ form select {
 
 
 	</style>
-
 </head>
 <body>
+
+		<!-- Page header -->
 
 	<div class="header">
 		<nav>
@@ -146,61 +146,19 @@ form select {
 
 <hr><br>
 
-	<h2>Welcome to YoYo_Designs! Please Sign Up here:</h2><br>
-<div class="signform">
-	<form method="post" action="index.php">
-		<label for="firstname"> First Name:
-			<input type="text" name="firstname" >
-		</label>
-			<div class="red-text"><?php echo $errors['firstname']; ?> </div> <br><br>
-	
-
-		<label for="secondname"> Second Name:
-			<input type="text" name="secondname" >
-		</label> 
-		<div class="red-text"><?php echo $errors['secondname']; ?> </div><br><br>
-
-		<label for="email"> Email:
-			<input type="text" name="email">
-		</label>
-		<div class="red-text"><?php echo $errors['email']; ?> </div> <br><br>
-
-		<label for="dob"> Date of Birth:
-			<input type="date" name="dob">
-		</label>
-		<div class="red-text"><?php echo $errors['dob']; ?> </div> <br><br>
-
-		<label for="favColor"> Favourite Color:
-			<input type="color" name="favColor">
-		</label>
-		<div class="red-text"><?php echo $errors['favColor']; ?> </div> <br><br>
-
-		<label for="gender"> Gender:
-			<input type="checkbox" name="gender" value="male" id="gender">Male
-			<input type="checkbox" name="gender" value="female" id="gender">Female
-		</label> 
-		<div class="red-text"><?php echo $errors['gender']; ?> </div><br><br>
-
-		Department:
-		<select name="department"> 
-			<option name="department" value="it" >IT </option>
-			<option name="department" value="hr" >HR </option>
-			<option name="department" value="Stuff" >Stuff</option>
-		</select>
-		<div class="red-text"><?php echo $errors['department']; ?> </div><br/><br/>
-
-		<label for="password"> Password:
-			<input type="password" name="password">
-		</label>
-		<div class="red-text"><?php echo $errors['password']; ?> </div> <br><br>
-
-		<input type="submit" name="submit" value="submit" id="submit">
-
-	</form>
-</div>
-
-
+	<!-- Favourite Background color -->
 <?php
+	if(isset( $_POST["submit"] )){
+     	$color = $_POST["favColor"];
+  	 	echo "<style> body{ background: $color; } </style>";
+    }
+ ?>
+
+
+ 	<!-- Form Validation -->
+
+	<?php
+	$firstname = $secondname = $email = $dob = $favColor = $gender = $password = '';
 
 	$errors = array('firstname' => '', 'secondname' => '', 'email' => '', 'dob' => '', 'favColor' => '', 'gender' => '', 'department' => '', 'password' => '');
 
@@ -218,7 +176,7 @@ form select {
 			if(empty($_POST["secondname"])){
 				$errors['secondname'] = "Please enter your Second Name <br/><br/>";
 			} else{
-				$firstname = $_POST["secondname"];
+				$secondname = $_POST["secondname"];
 				if(!preg_match('/^[A-Za-z\s\-]+$/' , $secondname)){
 					$errors['secondname'] = "Name must be letters, spaces and hypen only";
 				}
@@ -236,19 +194,28 @@ form select {
 			if(empty($_POST["dob"])){
 				$errors['dob'] = "Please choose a Date of Birth <br/><br/>";
 			} else{
+				$dob = $_POST["dob"];
 				echo ($_POST["dob"]);
 			};
 
 			if(empty($_POST["favColor"])){
 				$errors['favColor'] = "You must selct your Favourite color <br/><br/>";
 			} else{
+				$favColor = $_POST["favColor"];
 				echo ($_POST["favColor"]);
 			};
 
 			if(empty($_POST["gender"])){
 				$errors['gender'] = "Please choose your gender <br/><br/>";
 			} else {
-				echo ($_POST["gender"]);
+				$gender = $_POST["gender"] = array('male' , 'female');
+				if ($gender = 'male') {
+					echo "Male";
+				} elseif ($gender = 'female'){
+					echo "Female";
+				} else{
+					echo "You can only pick one gender";
+				}
 			}
 
 			if(empty($_POST["department"])){
@@ -261,7 +228,7 @@ form select {
 				$errors['password'] = "Please enter your Password";
 			} else{
 				$password = $_POST["password"];
-				if(!preg_match('/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/', $password)){
+				if(!preg_match('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})' , $password)){
 					$errors['password'] = "Password must be 15 characters minimum (A-Za-z0-9`!?$?%^&*()_-+={[}]:;@'~#|\<,>.?/) ";
 				} 
 			};
@@ -269,13 +236,63 @@ form select {
 
 	?>
 
-	<?php
-	if(isset( $_POST["submit"] )){
-     	$color = $_POST["favColor"];
-  	 	echo "<style> body{ background: $color; } </style>";
-    }
- ?>
+		<!-- Sign up Form -->
 
+	<h2>Welcome to YoYo_Designs! Please Sign Up here:</h2><br>
+	<div class="signform">
+
+	<form name="myForm" method="post" action="index.php" onsubmit="return validateForm()">
+		<label for="firstname"> First Name:
+			<input type="text" name="firstname"  value="<?php echo $firstname; ?>">
+		</label>
+			<div class="red-text"><?php echo $errors['firstname']; ?> </div> <br><br>
+	
+		<label for="secondname"> Second Name:
+			<input type="text" name="secondname"  value="<?php echo $secondname; ?>">
+		</label> 
+		<div class="red-text"><?php echo $errors['secondname']; ?> </div><br><br>
+
+		<label for="email"> Email:
+			<input type="text" name="email" value="<?php echo $email; ?>">
+		</label>
+		<div class="red-text"><?php echo $errors['email']; ?> </div> <br><br>
+
+		<label for="dob"> Date of Birth:
+			<input type="date" name="dob" value="<?php echo $dob; ?>">
+		</label> 
+		<div class="red-text"><?php echo $errors['dob']; ?></div><br><br>
+
+		<label for="favColor"> Favourite Color:
+			<input type="color" name="favColor" value="<?php echo $favColor; ?>">
+		</label>
+		<div class="red-text"><?php echo $errors['favColor']; ?></div><br><br>
+
+		<label for="gender" id="checkboxes"> Gender:
+			<input type="checkbox" name="gender" value="male" id="gender">Male
+			<input type="checkbox" name="gender" value="female" id="gender">Female
+		</label>
+		<div class="red-text"><?php echo $errors['gender']; ?> </div><br><br>
+
+		Department:
+		<select name="department"> 
+			<option name="department" value="it" >IT </option>
+			<option name="department" value="hr" >HR </option>
+			<option name="department" value="Stuff" >Stuff</option>
+		</select>
+		<div class="red-text"><?php echo $errors['department']; ?></div> <br/><br/>
+
+		<label for="password"> Password:
+			<input type="password" name="password">
+		</label>
+		<div class="red-text"><?php echo $errors['password']; ?></div> <br><br>
+
+		<input type="submit" name="submit" value="submit" id="submit">
+
+	</form>
+</div>
+
+
+		<!-- Footer -->
 
 	<div class="footer-container">
       	<div class="logo-container">
@@ -285,7 +302,6 @@ form select {
           <div class="address-holder" style="color: #333333;"> 34th Avenue, Ikeja, Lagos, Nigeria </div>
 
       </div>
-
 
 </body>
 </html>
