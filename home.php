@@ -78,16 +78,15 @@ nav a:hover {
 
 
 	<!-- Favourite Background color -->
-<?php
+ <?php
 	if(isset( $_POST["submit"] )){
      	$color = $_POST["favColor"];
   	 	echo "<style> body{ background: $color; } </style>";
+  	 	//echo ($_POST["firstname"]);
     }
- ?>
+ ?> 
 
- 	<!-- form validation -->
 
-	
 
 
 

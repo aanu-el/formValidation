@@ -208,15 +208,9 @@ form select {
 			if(empty($_POST["gender"])){
 				$errors['gender'] = "Please choose your gender <br/><br/>";
 			} else {
-				$gender = $_POST["gender"] = array('male' , 'female');
-				if ($gender = 'male') {
-					echo "Male";
-				} elseif ($gender = 'female'){
-					echo "Female";
-				} else{
-					echo "You can only pick one gender";
-				}
-			}
+				$gender = $_POST["gender"];
+				echo $_POST["gender"];
+ 				}
 
 			if(empty($_POST["department"])){
 				$errors['department'] = "Please Choose your Department <br/><br/>";
@@ -225,23 +219,31 @@ form select {
 			};
 
 			if(empty($_POST["password"])){
-				$errors['password'] = "Please enter your Password";
+				$errors['password'] = "Please enter a Strong Password";
 			} else{
 				$password = $_POST["password"];
-				if(!preg_match('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})' , $password)){
-					$errors['password'] = "Password must be 15 characters minimum (A-Za-z0-9`!?$?%^&*()_-+={[}]:;@'~#|\<,>.?/) ";
-				} 
+				if(!preg_match('/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{15,30}$/', $password)){
+					$errors['password'] = "Password must at least 15 characters, must contain at least a lowercase, uppercase, number, and special characters";
+				}
+			}
+		
+
+				if(array_filter($errors)){
+					//echo "Errors in the form";
+				} else {
+					header('Location: home.php');
+				}
 			};
-		}
 
 	?>
+
 
 		<!-- Sign up Form -->
 
 	<h2>Welcome to YoYo_Designs! Please Sign Up here:</h2><br>
 	<div class="signform">
 
-	<form name="myForm" method="post" action="index.php" onsubmit="return validateForm()">
+	<form name="myForm" method="post" action="index.php">
 		<label for="firstname"> First Name:
 			<input type="text" name="firstname"  value="<?php echo $firstname; ?>">
 		</label>
@@ -268,13 +270,14 @@ form select {
 		<div class="red-text"><?php echo $errors['favColor']; ?></div><br><br>
 
 		<label for="gender" id="checkboxes"> Gender:
-			<input type="checkbox" name="gender" value="male" id="gender">Male
-			<input type="checkbox" name="gender" value="female" id="gender">Female
+			<input type="radio" name="gender" value="male" id="gender">Male
+			<input type="radio" name="gender" value="female" id="gender">Female
 		</label>
 		<div class="red-text"><?php echo $errors['gender']; ?> </div><br><br>
 
 		Department:
 		<select name="department"> 
+			<option></option>
 			<option name="department" value="it" >IT </option>
 			<option name="department" value="hr" >HR </option>
 			<option name="department" value="Stuff" >Stuff</option>
@@ -305,5 +308,3 @@ form select {
 
 </body>
 </html>
-
-
