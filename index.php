@@ -2,6 +2,8 @@
 <html>
 <head>
 	<title>Eleos | Task2</title>
+	<script type="text/javascript" src="jquery-3.5.1.min.js"></script>
+	<script type="text/javascript" src="script.js"></script>
 
 	<style type="text/css">
 
@@ -245,27 +247,27 @@ form select {
 
 	<form name="myForm" method="post" action="index.php">
 		<label for="firstname"> First Name:
-			<input type="text" name="firstname"  value="<?php echo $firstname; ?>">
+			<input type="text" name="firstname" id="firstname" value="<?php echo $firstname; ?>">
 		</label>
 			<div class="red-text"><?php echo $errors['firstname']; ?> </div> <br><br>
 	
 		<label for="secondname"> Second Name:
-			<input type="text" name="secondname"  value="<?php echo $secondname; ?>">
+			<input type="text" name="secondname" id="secondname" value="<?php echo $secondname; ?>">
 		</label> 
 		<div class="red-text"><?php echo $errors['secondname']; ?> </div><br><br>
 
 		<label for="email"> Email:
-			<input type="text" name="email" value="<?php echo $email; ?>">
+			<input type="text" name="email" id="email" value="<?php echo $email; ?>">
 		</label>
 		<div class="red-text"><?php echo $errors['email']; ?> </div> <br><br>
 
 		<label for="dob"> Date of Birth:
-			<input type="date" name="dob" value="<?php echo $dob; ?>">
+			<input type="date" name="dob" id="dob" value="<?php echo $dob; ?>">
 		</label> 
 		<div class="red-text"><?php echo $errors['dob']; ?></div><br><br>
 
 		<label for="favColor"> Favourite Color:
-			<input type="color" name="favColor" value="<?php echo $favColor; ?>">
+			<input type="color" name="favColor" id="favColor" value="<?php echo $favColor; ?>">
 		</label>
 		<div class="red-text"><?php echo $errors['favColor']; ?></div><br><br>
 
@@ -276,7 +278,7 @@ form select {
 		<div class="red-text"><?php echo $errors['gender']; ?> </div><br><br>
 
 		Department:
-		<select name="department"> 
+		<select name="department" id="department"> 
 			<option></option>
 			<option name="department" value="it" >IT </option>
 			<option name="department" value="hr" >HR </option>
@@ -285,7 +287,7 @@ form select {
 		<div class="red-text"><?php echo $errors['department']; ?></div> <br/><br/>
 
 		<label for="password"> Password:
-			<input type="password" name="password">
+			<input type="password" id="password" name="password">
 		</label>
 		<div class="red-text"><?php echo $errors['password']; ?></div> <br><br>
 
