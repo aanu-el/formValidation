@@ -12,7 +12,7 @@
 		}
 
 		body {
-			background-color: <?php $bgcolor = $_POST["color"]; echo $bgcolor; ?>;
+			background-color: <?php $bgcolor = urldecode($_GET["fcolor"]); echo $bgcolor; ?>;
 		}
 
 		nav {
@@ -78,22 +78,18 @@ nav a:hover {
 
 
 	<!-- Favourite Background color -->
- <?php
-	if(isset( $_POST["submit"] )){
-     	$color = $_POST["favColor"];
-  	 	echo "<style> body{ background: $color; } </style>";
-  	 	//echo ($_POST["firstname"]);
-    }
- ?> 
+ 
 
 
-
-
-
+<p> Firstname:   <? echo $_GET['fname']; ?> </p>
+<p> Secondname:   <? echo $_GET['sname']; ?> </p>
+<p> Email:   <? echo $_GET['email']; ?> </p>
+<p> Department:   <? echo $_GET['dept']; ?> </p>
+<p> Gender:   <? echo $_GET['sex']; ?> </p>
+<p> Date of Birth:   <? echo $_GET['dateofbirth']; ?> </p>
 
   
 
-	
 
 
 

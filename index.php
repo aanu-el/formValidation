@@ -3,7 +3,7 @@
 <head>
 	<title>Eleos | Task2</title>
 	<script type="text/javascript" src="jquery-3.5.1.min.js"></script>
-	<script type="text/javascript" src="script.js"></script>
+<script type="text/javascript" src="script.js"></script>
 
 	<style type="text/css">
 
@@ -15,6 +15,11 @@
 
 		body {
 			background-image: linear-gradient(120deg, #fdfbfb 0%, #ebedee 100%);
+		}
+
+		.error {
+
+			border: solid 1px red;
 		}
 
 		.signform {
@@ -78,9 +83,17 @@ form select {
 	box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.3), 0 7px 21px 0 rgba(0, 0, 0, 0.20); 
 }
 
-		#gender {
-			width: 15px;
-		}
+#gender{
+	width: 15px;
+}
+
+#male {
+	width: 15px;
+}
+
+#female {
+	width: 15px;
+}
 
 
 #submit {
@@ -149,13 +162,13 @@ form select {
 <hr><br>
 
 	<!-- Favourite Background color -->
-<?php
+<!-- <?php
 	if(isset( $_POST["submit"] )){
      	$color = $_POST["favColor"];
   	 	echo "<style> body{ background: $color; } </style>";
     }
  ?>
-
+ -->
 
  	<!-- Form Validation -->
 
@@ -217,6 +230,7 @@ form select {
 			if(empty($_POST["department"])){
 				$errors['department'] = "Please Choose your Department <br/><br/>";
 			} else{
+				$department = $_POST["department"];
 				echo ($_POST["department"]);
 			};
 
@@ -233,7 +247,9 @@ form select {
 				if(array_filter($errors)){
 					//echo "Errors in the form";
 				} else {
-					header('Location: home.php');
+
+					$fcol = urlencode($favColor);
+					header("Location: home.php?fname=$firstname&sname=$secondname&email=$email&sex=$gender&dept=$department&dateofbirth=$dob&fcolor=$fcol");
 				}
 			};
 
@@ -247,38 +263,38 @@ form select {
 
 	<form name="myForm" method="post" action="index.php">
 		<label for="firstname"> First Name:
-			<input type="text" name="firstname" id="firstname" value="<?php echo $firstname; ?>">
+			<input type="text" class="frmel" name="firstname" id="firstname" value="<?php echo $firstname; ?>">
 		</label>
 			<div class="red-text"><?php echo $errors['firstname']; ?> </div> <br><br>
 	
 		<label for="secondname"> Second Name:
-			<input type="text" name="secondname" id="secondname" value="<?php echo $secondname; ?>">
+			<input type="text"  class="frmel"  name="secondname" id="secondname" value="<?php echo $secondname; ?>">
 		</label> 
 		<div class="red-text"><?php echo $errors['secondname']; ?> </div><br><br>
 
 		<label for="email"> Email:
-			<input type="text" name="email" id="email" value="<?php echo $email; ?>">
+			<input type="text"   class="frmel"  name="email" id="email" value="<?php echo $email; ?>">
 		</label>
 		<div class="red-text"><?php echo $errors['email']; ?> </div> <br><br>
 
 		<label for="dob"> Date of Birth:
-			<input type="date" name="dob" id="dob" value="<?php echo $dob; ?>">
+			<input type="date"  class="frmel"  name="dob" id="dob" value="<?php echo $dob; ?>">
 		</label> 
 		<div class="red-text"><?php echo $errors['dob']; ?></div><br><br>
 
 		<label for="favColor"> Favourite Color:
-			<input type="color" name="favColor" id="favColor" value="<?php echo $favColor; ?>">
+			<input type="color"  class="frmel"  name="favColor" id="favColor" value="<?php echo $favColor; ?>">
 		</label>
 		<div class="red-text"><?php echo $errors['favColor']; ?></div><br><br>
 
 		<label for="gender" id="checkboxes"> Gender:
-			<input type="radio" name="gender" value="male" id="gender">Male
-			<input type="radio" name="gender" value="female" id="gender">Female
+			<input type="checkbox" name="gender" value="male" id="male" checked="true">Male
+			<input type="checkbox" name="gender" value="female" id="female">Female
 		</label>
 		<div class="red-text"><?php echo $errors['gender']; ?> </div><br><br>
 
 		Department:
-		<select name="department" id="department"> 
+		<select name="department"  class="frmel"  id="department"> 
 			<option></option>
 			<option name="department" value="it" >IT </option>
 			<option name="department" value="hr" >HR </option>
@@ -287,7 +303,7 @@ form select {
 		<div class="red-text"><?php echo $errors['department']; ?></div> <br/><br/>
 
 		<label for="password"> Password:
-			<input type="password" id="password" name="password">
+			<input type="password"   class="frmel" id="password" name="password">
 		</label>
 		<div class="red-text"><?php echo $errors['password']; ?></div> <br><br>
 
